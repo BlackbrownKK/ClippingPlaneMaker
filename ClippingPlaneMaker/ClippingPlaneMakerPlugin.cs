@@ -24,28 +24,5 @@ namespace ClippingPlaneMaker
         ///<summary>Gets the only instance of the ClippingPlaneMakerPlugin plug-in.</summary>
         public static ClippingPlaneMakerPlugin Instance { get; private set; }
 
-
-        // You can override methods here to change the plug-in behavior on
-        // loading and shut down, add options pages to the Rhino _Option command
-        // and maintain plug-in wide options in a document.
-
-        // Called once when Rhino loads your plug-in
-        protected override LoadReturnCode OnLoad(ref string errorMessage)
-        {
-            // Turn on the mouse listener
-            CrossSectionMouseListener.Instance.Enabled = true;
-            RhinoApp.WriteLine("CrossSectionMouseListener enabled.");
-            return LoadReturnCode.Success;
-        }
-
-        // Called when Rhino is shutting down or unloading your plug-in
-        protected override void OnShutdown()
-        {
-            // Turn it off (good hygiene)
-            CrossSectionMouseListener.Instance.Enabled = false;
-            RhinoApp.WriteLine("CrossSectionMouseListener disabled.");
-            base.OnShutdown();
-        }
-
     }
 }
