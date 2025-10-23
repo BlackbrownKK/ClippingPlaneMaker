@@ -1,6 +1,8 @@
-﻿using System;
-using Rhino;
+﻿using Rhino;
 using Rhino.Commands;
+using Rhino.Input;
+using Rhino.Input.Custom;
+using System;
 
 namespace ClippingPlaneMaker
 {
@@ -19,6 +21,27 @@ namespace ClippingPlaneMaker
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
             CrossSectionMouseListener.Instance.Enabled = true;
+            var go = new GetOption();
+            go.SetCommandPrompt("Set Perspective view port availble for clipping plan");
+            var tog = new OptionToggle(!ClippingPlaneMaker.perspectiveClippingPlaneOff, "Off", "On");
+            int idxPersp = go.AddOptionToggle("PerspectiveClipping", ref tog);
+             
+            while (true)
+            {
+                var res = go.Get();
+                if (res == GetResult.Option)
+                {
+                    if (go.OptionIndex() == idxPersp)
+                    {
+                        ClippingPlaneMaker.perspectiveClippingPlaneOff = !tog.CurrentValue ? true : false;
+                    }
+                    continue;
+                }
+                if (res == GetResult.Nothing || res == GetResult.Cancel)
+                    break;
+            }
+
+            RhinoApp.WriteLine($"Perspective clipping planes: {(ClippingPlaneMaker.perspectiveClippingPlaneOff ? "OFF" : "ON")}");
             return Result.Success;
         }
     }

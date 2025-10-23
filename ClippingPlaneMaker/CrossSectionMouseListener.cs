@@ -32,7 +32,7 @@ namespace ClippingPlaneMaker
                 return;
 
             var view = e.View;
-            if (view == null || !view.ActiveViewport.Name.Equals("Side", StringComparison.OrdinalIgnoreCase))
+            if (view == null || !view.ActiveViewport.Name.Equals(ViewNames.Side, StringComparison.OrdinalIgnoreCase))
                 return;
 
             // Convert mouse position to 3D point

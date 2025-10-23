@@ -32,8 +32,8 @@ namespace ClippingPlaneMaker
 */
         const double ULength = 1;
         const double VLength = 1;
-
-     
+        
+        public static bool perspectiveClippingPlaneOff = false;
 
         public static void TopClippingPlaneMaker(double z)
         {
@@ -44,7 +44,7 @@ namespace ClippingPlaneMaker
             RhinoView topView = null;
             foreach (var v in doc.Views.GetViewList(true, false))
             {
-                if (v.ActiveViewport.Name.Equals("Top", StringComparison.OrdinalIgnoreCase))
+                if (v.ActiveViewport.Name.Equals(ViewNames.Top, StringComparison.OrdinalIgnoreCase))
                 {
                     topView = v;
                     break;
@@ -81,6 +81,9 @@ namespace ClippingPlaneMaker
 
         public static void isometricClippingPlaneMaker(double x, double z)
         {
+            if (perspectiveClippingPlaneOff)
+                return;
+
             var doc = RhinoDoc.ActiveDoc;
             if (doc == null)
                 return;
@@ -89,7 +92,7 @@ namespace ClippingPlaneMaker
             RhinoView isoView = null;
             foreach (var v in doc.Views.GetViewList(true, false))
             {
-                if (v.ActiveViewport.Name.ToLower().Contains("Perspective".ToLower()))
+                if (v.ActiveViewport.Name.ToLower().Contains(ViewNames.Perspective.ToLower()))
                 {
                     isoView = v;
                     break;
