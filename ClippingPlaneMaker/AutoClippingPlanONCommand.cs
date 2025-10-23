@@ -23,9 +23,8 @@ namespace ClippingPlaneMaker
             CrossSectionMouseListener.Instance.Enabled = true;
             var go = new GetOption();
             go.SetCommandPrompt("Set Perspective view port availble for clipping plan");
-            var tog = new OptionToggle(!ClippingPlaneMaker.perspectiveClippingPlaneOff, "Off", "On");
+            var tog = new OptionToggle(!CrossSectionMouseListener.perspectiveClippingPlaneOn, "Off", "On");
             int idxPersp = go.AddOptionToggle("PerspectiveClipping", ref tog);
-             
             while (true)
             {
                 var res = go.Get();
@@ -33,15 +32,14 @@ namespace ClippingPlaneMaker
                 {
                     if (go.OptionIndex() == idxPersp)
                     {
-                        ClippingPlaneMaker.perspectiveClippingPlaneOff = !tog.CurrentValue ? true : false;
+                        CrossSectionMouseListener.perspectiveClippingPlaneOn = !tog.CurrentValue ? true : false;
                     }
                     continue;
                 }
                 if (res == GetResult.Nothing || res == GetResult.Cancel)
                     break;
             }
-
-            RhinoApp.WriteLine($"Perspective clipping planes: {(ClippingPlaneMaker.perspectiveClippingPlaneOff ? "OFF" : "ON")}");
+            RhinoApp.WriteLine($"Perspective clipping planes: {(CrossSectionMouseListener.perspectiveClippingPlaneOn ? "OFF" : "ON")}");
             return Result.Success;
         }
     }

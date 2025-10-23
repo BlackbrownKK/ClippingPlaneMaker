@@ -25,7 +25,8 @@ namespace ClippingPlaneMaker
 */
         private static readonly Lazy<CrossSectionMouseListener> _instance = new Lazy<CrossSectionMouseListener>(() => new CrossSectionMouseListener()); 
         public static CrossSectionMouseListener Instance => _instance.Value;
-        
+        public static bool perspectiveClippingPlaneOn = false;
+
         protected override void OnMouseDown(MouseCallbackEventArgs e)
         {
             if (e.MouseButton != MouseButton.Left)
@@ -43,6 +44,7 @@ namespace ClippingPlaneMaker
             double z = line.From.Z;
             double x = line.From.X;
             ClippingPlaneMaker.TopClippingPlaneMaker(z);
+            if (perspectiveClippingPlaneOn)
             ClippingPlaneMaker.isometricClippingPlaneMaker(x, z); // Pass both X and Z to isometricClippingPlaneMaker
         }
     }
